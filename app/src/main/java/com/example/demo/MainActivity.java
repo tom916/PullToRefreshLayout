@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChange() {
                 tv.setText("释放刷新");
+
+                //旋转箭头
+
                 ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv, "rotation", 0f, -180f);
                 objectAnimator.setDuration(500);
                 objectAnimator.start();
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRecover() {
                 tv.setText("下拉刷新");
+
+                //把箭头转回来
+
                 ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv, "rotation", -180f, 0);
                 objectAnimator.setDuration(500);
                 objectAnimator.start();
@@ -80,11 +86,13 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 tv.setText("刷新中");
 
-                //复原
+                //复原ImageView的朝向成初始状态（被属性动画改变了）
+
                 ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv, "rotation", -180f, 0);
                 objectAnimator.setDuration(0);
                 objectAnimator.start();
 
+                //隐藏ImageView，显示圆形进度条控件
 
                 iv.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
@@ -94,8 +102,15 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 tv.setText("下拉刷新");
 
+                //隐藏圆形进度条，显示ImageView
+
                 iv.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onPull(float rate) {
+
             }
         });
 

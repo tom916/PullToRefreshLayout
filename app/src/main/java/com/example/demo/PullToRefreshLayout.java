@@ -78,6 +78,8 @@ public class PullToRefreshLayout extends LinearLayout {
 
         void onRefresh();//释放刷新->刷新中
         void onFinish();//刷新中->下拉刷新
+
+        void onPull(float rate);
     }
 
     public void setListener(Listener listener) {
@@ -223,6 +225,8 @@ public class PullToRefreshLayout extends LinearLayout {
                     LinearLayout.LayoutParams params = (LayoutParams) headerContainer.getLayoutParams();
                     params.topMargin = - containerHeight + downOffset;
                     headerContainer.setLayoutParams(params);
+
+                    listener.onPull(((float) downOffset)/headerHeight);
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
